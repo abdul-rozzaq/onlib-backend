@@ -2,11 +2,16 @@ from django.contrib.auth.models import User
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import authentication, permissions
+from rest_framework import permissions
+from rest_framework.permissions import AllowAny
 
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.authtoken.models import Token
 
 from library.models import *
 from library.serializers import *
+
 
 
 
@@ -65,7 +70,7 @@ class ListBooks(APIView):
     
     def get(self, request, format=None):
         import time
-        time.sleep(5)
+        # time.sleep(5)
         
         books = Book.objects.all()
         serializer = BookSerializer(books, many=True)
@@ -90,7 +95,22 @@ class ListBooks(APIView):
         else:
             return Response({'status': 403}, status=403)
 
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def check_auth_token(request):
+    string_token = request.META.get('HTTP_AUTHORIZATION').split('Token')[1].strip() if request.META.get('HTTP_AUTHORIZATION') else False
     
-    
-    
+    if string_token:
+        token:Token = Token.objects.filter(key=string_token) 
+        
+        if token.exists():
+            user = token[0].user
+
+            sr = UserSerializer(user)
+            
+            
+            return Response(sr.data, status=200)
+        
+        
+    return Response({'status': 403}, status=403)
     

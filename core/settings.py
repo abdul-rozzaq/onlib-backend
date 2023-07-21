@@ -45,13 +45,7 @@ INSTALLED_APPS = [
     # thirtd party
     'rest_framework',
     'rest_framework.authtoken',    
-    'dj_rest_auth',
-    
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'dj_rest_auth.registration',
-    
+
     
     # local 
     'api.apps.ApiConfig',
@@ -164,6 +158,3 @@ else:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
  
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-SITE_ID = 1
