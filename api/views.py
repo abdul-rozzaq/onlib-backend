@@ -64,6 +64,9 @@ class ListBooks(APIView):
     serializer_class = BookSerializer 
     
     def get(self, request, format=None):
+        import time
+        time.sleep(5)
+        
         books = Book.objects.all()
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
