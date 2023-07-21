@@ -11,6 +11,9 @@ urlpatterns = [
     path('books/', ListBooks.as_view()), 
         
     path('login/', obtain_auth_token, name='login'),
+    path('register/', register_user, name='register'),
+    
     path('user/', check_auth_token, name='user'),
+    
 ]
 

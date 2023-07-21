@@ -114,3 +114,22 @@ def check_auth_token(request):
         
     return Response({'status': 403}, status=403)
     
+    
+    
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register_user(request):
+    data = request.data
+    sr = UserSerializer(data=data)
+    
+    if sr.is_valid():
+        user = sr.save()
+        
+        token, created = Token.objects.get_or_create(user=user)
+        
+        return Response({'token': token.key})
+    
+    return Response({'status': 400}, status=400)
+    
+    

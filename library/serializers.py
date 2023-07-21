@@ -33,7 +33,21 @@ class BookSerializer(serializers.ModelSerializer):
         
         
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    
     class Meta:
         model = User
-        fields = ['id', 'username', 'first_name', 'last_name']
+        fields = ['id', 'username', 'first_name', 'last_name', 'password']
         
+
+    def create(self, validated_data):
+        return User.objects.create_user(
+            username   = validated_data['username'], 
+            first_name = validated_data['first_name'], 
+            last_name  = validated_data['last_name'], 
+            password   = validated_data['password'],
+        )
+         
+        
+        
+    
