@@ -15,5 +15,9 @@ urlpatterns = [
     
     path('user/', check_auth_token, name='user'),
     
+    
+    
+    path('<str:name>/', chat_info, name='chat_info'),
+    path('', ms_info, name='chat_info')
 ]
 

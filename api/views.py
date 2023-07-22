@@ -8,6 +8,8 @@ from rest_framework.permissions import AllowAny
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.authtoken.models import Token
+from chat.models import *
+from chat.serializers import *
 
 from library.models import *
 from library.serializers import *
@@ -133,3 +135,22 @@ def register_user(request):
     return Response({'status': 400}, status=400)
     
     
+    
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def chat_info(request, name):
+    
+    sr = GroupSerializer(Group.objects.get(name=name))
+
+    return Response(sr.data)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def ms_info(request):
+    
+    sr = MessageSerializer(Message.objects.all(), many=True)
+
+    return Response(sr.data)
+
+

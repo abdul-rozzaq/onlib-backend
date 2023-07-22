@@ -1,5 +1,7 @@
 /env
 
 .env
-
+.kolo
 *.pyc
+
+.vscode
